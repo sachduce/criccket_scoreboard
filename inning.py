@@ -67,7 +67,7 @@ class Inning():
 
             ## update bowler record
             self._bowler.bowling.update_bowling_scores(ball);
-            if(self._wickets_fell == self._max_wickets or self._balls_bowled == self._max_balls or (self._target and self._target < self._runs_scored)):
+            if(self._wickets_fell == self._max_wickets or self._balls_bowled == self._max_balls or (self._target is not None  and self._target < self.runs_scored)):
                 self._is_over = True;
 
             if (not self._is_over and self._balls_bowled % Inning.BALLS_IN_OVER == 0 and Inning.is_valid_ball(ball)):

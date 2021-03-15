@@ -6,7 +6,8 @@ class Batting:
         self._fours = 0;
         self._sixes = 0;
         self._is_out = False;
-
+        self._sccore_card = [0]* 12
+#[0,0,0,0,4,0, 8, 8, 8, 8]
     @property
     def strike_rate(self):
         if (self._balls_faced == 0):
