@@ -2,10 +2,8 @@ from random import randint;
 class Inning():
     BALLS_IN_OVER = 6;
 
-    def __init__(self, number_of_overs, number_of_players, batsman, bowlers, target = None):
+    def __init__(self, number_of_overs, number_of_players, batting_team, bowling_team, target = None):
         super().__init__();
-        self._batsman = batsman;
-        self._bowlers = bowlers;
         self._extras = 0;
         self._wickets_fell = 0;
         self._max_balls = number_of_overs * Inning.BALLS_IN_OVER;
@@ -13,10 +11,12 @@ class Inning():
         self._runs_scored = 0;
         self._balls_bowled = 0;
         self._is_over = False;
-        self._striker = batsman[self._wickets_fell];
-        self._non_striker = batsman[self._wickets_fell + 1];
-        self._bowler = self._bowlers[randint(0, number_of_players - 1)];
         self._target = target;
+        self._batting_team = batting_team;
+        self._bowling_team = bowling_team;
+        self._striker = self._batting_team.players[self._wickets_fell];
+        self._non_striker = self._batting_team.players[self._wickets_fell + 1];
+        self._bowler = self._bowling_team.players[randint(0, number_of_players - 1)];
 
     @property
     def extras(self):
@@ -38,6 +38,12 @@ class Inning():
     def wickets_fell(self):
         return self._wickets_fell;
 
+    @staticmethod
+    def is_valid_ball(ball):
+        if(ball == 'nb' or ball == 'wd'):
+            return  False;
+        return True;
+
     def update_inning(self, ball):
         ball = ball.lower();
         if(self._is_over == False):
@@ -50,7 +56,7 @@ class Inning():
                 self._balls_bowled += 1;
                 self._striker.batting.update_batting_scores(ball);
                 if(self._wickets_fell != self._max_wickets):
-                    self._striker = self._batsman[self._wickets_fell+1];
+                    self._striker = self._batting_team.players[self._wickets_fell+1];
             elif(ball.isnumeric()):
                 score = int(ball);
                 self._runs_scored += score;
@@ -66,37 +72,29 @@ class Inning():
             if(self._wickets_fell == self._max_wickets or self._balls_bowled == self._max_balls or (self._target and self._target < self._runs_scored)):
                 self._is_over = True;
 
-            if (not self._is_over and self._balls_bowled % 6 == 0 and ball.isnumeric()):
+            if (not self._is_over and self._balls_bowled % 6 == 0 and Inning.is_valid_ball(ball)):
                 self._striker, self._non_striker = self._non_striker, self._striker;
-                self._bowler = self._bowlers[randint(0, self._max_wickets)];
+                self._bowler = self._bowling_team.players[randint(0, self._max_wickets)]
 
-            if(self._is_over or (self._balls_bowled % 6 == 0 and ball.isnumeric())):
+            if(self._is_over or (self._balls_bowled % 6 == 0 and Inning.is_valid_ball(ball))):
                 self.print_innings();
         else:
             raise ValueError('Innings over for the team');
 
 
     def print_innings(self):
-        print("Batting Scorecard for team:")
+        print("Batting Scorecard for {}".format(self._batting_team.name));
         print("{:<15} {:<10} {:<10} {:<10} {:<10} {:<10}".format("Player Name", "Score", "Balls", "4s", "6s", "Strike Rate"));
-        for p in self._batsman:
+        for p in self._batting_team.players:
             p.print_player_batting(self._striker, self._non_striker);
 
-        print("Bowling Scorecard for team:")
+        print("Bowling Scorecard for {}:".format(self._bowling_team.name));
         print("{:<15} {:<10} {:<10} {:<10} {:<10} {:<10}".format("Player Name", "Overs", "Runs", "Wickets", "Dots", "Economy"));
-        for p in self._bowlers:
+        for p in self._bowling_team.players:
             p.print_player_bowling();
 
         print("Total : {}/{}".format(self.runs_scored, self._wickets_fell));
         print("Overs : {}.{}".format(self._balls_bowled // Inning.BALLS_IN_OVER,
                                      self._balls_bowled % Inning.BALLS_IN_OVER));
         print("Extras : {}".format(self._extras));
-
-
-
-
-
-
-
-
 
