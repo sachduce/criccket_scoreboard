@@ -1,9 +1,7 @@
 from random import randint;
 class Inning():
     BALLS_IN_OVER = 6;
-
     def __init__(self, number_of_overs, number_of_players, batting_team, bowling_team, target = None):
-        super().__init__();
         self._extras = 0;
         self._wickets_fell = 0;
         self._max_balls = number_of_overs * Inning.BALLS_IN_OVER;
