@@ -70,11 +70,11 @@ class Inning():
             if(self._wickets_fell == self._max_wickets or self._balls_bowled == self._max_balls or (self._target and self._target < self._runs_scored)):
                 self._is_over = True;
 
-            if (not self._is_over and self._balls_bowled % 6 == 0 and Inning.is_valid_ball(ball)):
+            if (not self._is_over and self._balls_bowled % Inning.BALLS_IN_OVER == 0 and Inning.is_valid_ball(ball)):
                 self._striker, self._non_striker = self._non_striker, self._striker;
                 self._bowler = self._bowling_team.players[randint(0, self._max_wickets)]
 
-            if(self._is_over or (self._balls_bowled % 6 == 0 and Inning.is_valid_ball(ball))):
+            if(self._is_over or (self._balls_bowled % Inning.BALLS_IN_OVER == 0 and Inning.is_valid_ball(ball))):
                 self.print_innings();
         else:
             raise ValueError('Innings over for the team');
