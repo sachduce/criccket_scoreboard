@@ -66,11 +66,11 @@ class Inning():
             if(self._wickets_fell == self._max_wickets or self._balls_bowled == self._max_balls or (self._target and self._target < self._runs_scored)):
                 self._is_over = True;
 
-            if (not self._is_over and self._balls_bowled % 6 == 0):
+            if (not self._is_over and self._balls_bowled % 6 == 0 and ball.isnumeric()):
                 self._striker, self._non_striker = self._non_striker, self._striker;
                 self._bowler = self._bowlers[randint(0, self._max_wickets)];
 
-            if(self._is_over or self._balls_bowled % 6 == 0):
+            if(self._is_over or (self._balls_bowled % 6 == 0 and ball.isnumeric())):
                 self.print_innings();
         else:
             raise ValueError('Innings over for the team');
@@ -90,6 +90,7 @@ class Inning():
         print("Total : {}/{}".format(self.runs_scored, self._wickets_fell));
         print("Overs : {}.{}".format(self._balls_bowled // Inning.BALLS_IN_OVER,
                                      self._balls_bowled % Inning.BALLS_IN_OVER));
+        print("Extras : {}".format(self._extras));
 
 
 

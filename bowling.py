@@ -7,6 +7,17 @@ class Bowling:
         self._wickets_taken = 0;
         self._dots = 0;
 
+    @property
+    def runs_conceded(self):
+        return self._runs_conceded;
+
+    @property
+    def wickets_taken(self):
+        return self._wickets_taken;
+
+    @property
+    def dots(self):
+        return self._dots;
 
     @property
     def economy(self):

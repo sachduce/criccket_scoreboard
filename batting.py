@@ -13,6 +13,26 @@ class Batting:
             return 0;
         return round(100 * self._runs_scored / self._balls_faced, 2);
 
+    @property
+    def runs_scored(self):
+        return self._runs_scored;
+
+    @property
+    def balls_faced(self):
+        return self._balls_faced;
+
+    @property
+    def sixes(self):
+        return self._sixes;
+
+    @property
+    def fours(self):
+        return self._fours;
+
+    @property
+    def is_out(self):
+        return self._is_out;
+
     def update_batting_scores(self, val):
         if (self._is_out == False):
             if (val == 'w'):

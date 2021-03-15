@@ -9,12 +9,12 @@ class Player:
 
 
     def print_player_batting(self, striker, non_striker):
-        name = self.name + '*' if not self.batting._is_out and (self == striker or self == non_striker) else self.name;
+        name = self.name + '*' if not self.batting.is_out and (self == striker or self == non_striker) else self.name;
         print("{:<15} {:<10} {:<10} {:<10} {:<10} {:<10} ".
-              format(name, self.batting._runs_scored, self.batting._balls_faced,
-                     self.batting._fours, self.batting._sixes, self.batting.strike_rate));
+              format(name, self.batting.runs_scored, self.batting.balls_faced,
+                     self.batting.fours, self.batting.sixes, self.batting.strike_rate));
 
     def print_player_bowling(self):
         print("{:<15}  {:<10} {:<10} {:<10} {:<10} {:<10} ".
-              format(self.name, self.bowling.overs_bowled,  self.bowling._runs_conceded, self.bowling._wickets_taken,
-                     self.bowling._dots, self.bowling.economy));
+              format(self.name, self.bowling.overs_bowled,  self.bowling.runs_conceded, self.bowling.wickets_taken,
+                     self.bowling.dots, self.bowling.economy));
